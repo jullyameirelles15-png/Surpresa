@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pablo Rio Cardoso</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== CORES (mude aqui para trocar o tema) ===== */
+    :root {
+      --fundo: #2b0a1a;       /* vinho escuro */
+      --fundo2: #4a1230;      /* vinho mais claro */
+      --destaque: #f4a6b8;    /* rosa */
+      --texto: #fff4f6;       /* quase branco */
+      --suave: #d9a9b6;       /* rosa acinzentado */
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", Arial, sans-serif;
+      color: var(--texto);
+      background: linear-gradient(160deg, var(--fundo), var(--fundo2));
+      background-attachment: fixed;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1, h2 { font-family: "Playfair Display", Georgia, serif; font-weight: 600; }
+    h1 { font-size: 2.6rem; margin: 0 0 10px; }
+    h2 { font-size: 1.8rem; color: var(--destaque); margin: 0 0 24px; }
+
+    /* ===== TELA DE SENHA ===== */
+    #bloqueio {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #bloqueio p { color: var(--suave); margin: 6px 0; }
+    input {
+      padding: 14px;
+      font-size: 20px;
+      border-radius: 10px;
+      border: 2px solid var(--destaque);
+      background: transparent;
+      color: var(--texto);
+      text-align: center;
+      width: 240px;
+      margin-top: 16px;
+    }
+    button {
+      padding: 14px 28px;
+      font-size: 18px;
+      font-family: inherit;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      background: var(--destaque);
+      color: var(--fundo);
+      cursor: pointer;
+      margin-top: 14px;
+    }
+    button:focus-visible, input:focus-visible { outline: 3px solid var(--texto); outline-offset: 3px; }
+    #erro { min-height: 24px; color: #ffb3b3; margin-top: 12px; }
+
+    /* ===== SITE (aparece depois da senha) ===== */
+    #site { display: none; }
+    section { max-width: 760px; margin: 0 auto; padding: 56px 20px; }
+
+    .abertura { padding-top: 90px; }
+    .abertura .eu-te-amo { font-size: 1.4rem; color: var(--destaque); font-style: italic; font-family: "Playfair Display", Georgia, serif; }
+
+    /* contador */
+    .contador { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+    .contador div { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 14px 18px; min-width: 84px; }
+    .contador strong { display: block; font-size: 2rem; color: var(--destaque); }
+    .contador span { font-size: 0.9rem; color: var(--suave); }
+
+    /* galeria */
+    .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .galeria figure { margin: 0; background: rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
+    .galeria img { width: 100%; height: 240px; object-fit: cover; display: block; }
+    .galeria figcaption { padding: 10px; font-size: 0.95rem; color: var(--suave); }
+
+    /* linha do tempo */
+    .tempo { text-align: left; border-left: 3px solid var(--destaque); padding-left: 22px; }
+    .tempo .momento { margin-bottom: 26px; }
+    .tempo .data { color: var(--destaque); font-weight: 600; }
+    .tempo p { margin: 4px 0 0; }
+
+    /* carta */
+    .carta { background: rgba(255,255,255,0.08); border-radius: 16px; padding: 30px 26px; text-align: left; line-height: 1.8; font-size: 1.1rem; }
+    .carta .assinatura { text-align: right; font-family: "Playfair Display", Georgia, serif; font-style: italic; color: var(--destaque); }
+
+    footer { padding: 40px 20px 60px; color: var(--suave); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TELA DE SENHA ===== -->
+  <div id="bloqueio">
+    <h1>Pablo Rio Cardoso</h1>
+    <p>Dica: a data do nosso namoro (DDMMAAAA)</p>
+    <input type="password" id="senha" inputmode="numeric" placeholder="Digite a senha" aria-label="Senha">
+    <button onclick="conferirIdentidade()">Conferir identidade</button>
+    <p id="erro" role="alert"></p>
+  </div>
+
+  <!-- ===== SITE ===== -->
+  <div id="site">
+
+    <section class="abertura">
+      <h1>Pablo Rio Cardoso</h1>
+      <p class="eu-te-amo">Eu te amo ❤️</p>
+
+      <div class="contador" aria-label="Tempo juntos">
+        <div><strong id="c-anos">0</strong><span>anos</span></div>
+        <div><strong id="c-meses">0</strong><span>meses</span></div>
+        <div><strong id="c-dias">0</strong><span>dias</span></div>
+      </div>
+      <p style="color: var(--suave); margin-top: 16px;">juntos desde 07/09/2024</p>
+    </section>
+
+    <section>
+      <h2>Nossos momentos</h2>
+      <!-- foto1.jpeg, foto2.jpeg, foto3.jpeg (na mesma pasta do index.html) -->
+      <div class="galeria">
+        <figure>
+          <img src="foto1.jpeg" alt="Foto de nós dois">
+          <figcaption>Eu amo essa nossa foto</figcaption>
+        </figure>
+        <figure>
+          <img src="foto2.jpeg" alt="Foto de nós dois">
+          <figcaption>Você é minha vida</figcaption>
+        </figure>
+        <figure>
+          <img src="foto3.jpeg" alt="Foto de nós dois">
+          <figcaption>Eu te amo o infinito</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Nossa história</h2>
+      <div class="tempo">
+        <div class="momento">
+          <div class="data">07/09/2024</div>
+          <p>O dia em que começamos a namorar.</p>
+        </div>
+         <div class="momento">
+          <div class="data">02/03/2025</div>
+          <p>Nossa primeira viagem juntos.</p>
+        </div>
+        <div class="momento">
+          <div class="data">09/11/2026</div>
+          <p>E a gente continua escrevendo essa história.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Uma carta para você</h2>
+      <div class="carta">
+        <p>Pablo,</p>
+        <p>Eu te amo demais, sempre estou aqui por nós.</p>
+        <p>Você é a minha vida!</p>
+        <p class="assinatura">Com todo o meu amor ❤️</p>
+      </div>
+    </section>
+
+    <footer>Feito com carinho para o Pablo Rio</footer>
+  </div>
+
+  <script>
+    // ===== SENHA =====
+    function conferirIdentidade() {
+      var senha = document.getElementById("senha").value;
+
+      if (senha === "07092024") {
+        document.getElementById("bloqueio").style.display = "none";
+        document.getElementById("site").style.display = "block";
+        window.scrollTo(0, 0);
+        calcularTempo();
+      } else {
+        document.getElementById("erro").innerHTML = "Senha incorreta 😅 Tente a data do namoro.";
+      }
+    }
+
+    // Aperta Enter no campo = clica no botão
+    document.getElementById("senha").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { conferirIdentidade(); }
+    });
+
+    // ===== CONTADOR DE TEMPO JUNTOS =====
+    function calcularTempo() {
+      var inicio = new Date(2024, 8, 7);   // ano, mês (0 = janeiro, então 8 = setembro), dia
+      var hoje = new Date();
+
+      var anos = hoje.getFullYear() - inicio.getFullYear();
+      var meses = hoje.getMonth() - inicio.getMonth();
+      var dias = hoje.getDate() - inicio.getDate();
+
+      if (dias < 0) {
+        meses--;
+        // pega quantos dias tinha no mês anterior
+        dias += new Date(hoje.getFullYear(), hoje.getMonth(), 0).getDate();
+      }
+      if (meses < 0) {
+        anos--;
+        meses += 12;
+      }
+
+      document.getElementById("c-anos").innerHTML = anos;
+      document.getElementById("c-meses").innerHTML = meses;
+      document.getElementById("c-dias").innerHTML = dias;
+    }
+  </script>
+
+</body>
+</html>
